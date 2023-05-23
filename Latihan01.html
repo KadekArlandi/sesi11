@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membaca Data JSon 01</title>
+</head>
+<body>
+
+    Nama : <span id="txNAMA"></span><br>
+    Alamat : <span id="txALAMAT"></span><br>
+    Tanggal Lahir : <span id="txTGL"></span><br>
+    Prodi : <span id="txPRODI"></span><br>
+    Jurusan : <span id="txJURUSAN"></span><br>
+    Tanggal Lahir : <input type="date" id="txTGL">
+
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Nama</th>
+            <th>Alamat</th>
+            <th>Tanggal Lahir</th>
+        </tr>
+        <tr>
+            <th>NO</th>
+            <th>NAMA</th>
+            <th>ALAMAT</th>
+            <th>TANGGAL LAHIR</th>
+        </tr>
+    </table>
+
+    
+    <script>
+        const jsHTTP = new XMLHttpRequest();
+        jsHTTP.open("GET","http://localhost/sesi11/Latihan01.php");
+        jsHTTP.send();
+
+        jsHTTP.onload = function(){
+            const isi = JSON.parse(this.responseText);
+            console.log(isi);
+            let tx = "<h3>List Data</h3>";
+            tx += "<table><tr><th>#</th><th>Nama</th><th>Alamat</th><th>Tanggal Lahir</th></tr></table>";
+            let no = 1; 
+            for(let i=0; i<isi.length; i++){
+                tx += "<tr>";
+                tx += "     <td>"+no+"</td>";
+                tx += "     <td>"+isi[i].nama+"</td>";
+                tx += "     <td>"+isi[i].alamat+"</td>";
+                tx += "     <td>"+isi[i].tgl_lahir+"</td>";
+                tx += "</tr>";
+                no++;
+            }
+            document.getElementById("txNAMA").innerHTML = isi[1].nama; 
+            document.getElementById("txALAMAT").innerHTML = isi[1].alamat;
+            document.getElementById("txTGL").innerHTML = isi[1].tgl_lahir;
+            document.getElementById("txPRODI").innerHTML = isi[1].prodi;
+            document.getElementById("txJURUSAN").innerHTML = isi[1].jurusan;
+            document.getElementById("txTGL").value = isi[1].tgl_lahir;
+        } 
+    </script>
+
+</body>
+</html>
